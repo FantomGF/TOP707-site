@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+/* -------------------- Глобальные настройки -------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+  background-color: #000C16;
+  color: gainsboro;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* -------------------- Фон -------------------- */
+.bodystyle {
+  background-image: url(back_pc.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .bodystyle {
+    background-image: url(back_mobile.png);
+  }
+}
+
+/* -------------------- Сетка -------------------- */
+.bodywrapper-grid {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "menu contents"
+    "footer footer";
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .bodywrapper-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "header"
+      "menu"
+      "contents"
+      "footer";
+  }
+}
+
+/* -------------------- Шапка и футер -------------------- */
+.header {
+  grid-area: header;
+  text-align: center;
+  background-color: rgba(0, 12, 22, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  color: #C0D6FF;
+  text-shadow: 0 0 8px #00BFFF;
+  font-size: 1.5rem;
+}
+
+.footer {
+  grid-area: footer;
+  text-align: center;
+  background-color: rgba(0, 12, 22, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  color: #C0D6FF;
+  text-shadow: 0 0 8px #00BFFF;
+  font-size: 1.2rem;
+}
+
+/* -------------------- Меню -------------------- */
+.menu {
+  grid-area: menu;
+  padding: 15px;
+  background-color: rgba(0, 12, 22, 0.9);
+  border-radius: 15px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-height: none;
+  }
+}
+
+/* -------------------- Элементы меню -------------------- */
+.menu-item {
+  padding: 10px;
+  font-size: 1.25rem;
+  border-radius: 15px;
+  margin-bottom: 8px;
+  transition: background-color 0.3s ease;
+}
+.menu-item {
+  height: 10vh; /* или другая фиксированная величина */
+}
+
+.menu-item:hover {
+  background-color:rgba(0, 255, 255, 0.2);
+  border-bottom: 2px solid LightSteelBlue;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .menu-item {
+    flex: 0 0 calc(33.33% - 10px);
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* -------------------- Кнопки меню -------------------- */
+.menu-item button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.8rem, 2vw, 1.8rem);
+  color: #C0D6FF;
+  text-shadow: 0 0 4px #00BFFF;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
+  will-change: transform;
+}
+
+.menu-item button:hover {
+  transform: scale(1.05);
+  color: #FFFFFF;
+  text-shadow: 0 0 6px #00FFFF, 0 0 12px #00BFFF;
+}
+
+@media (min-width: 1024px) {
+  .menu-item button {
+    height: 12vh;
+    background-size: 90%;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-item button {
+    height: 10vh;
+    font-size: clamp(0.7rem, 3vw, 1.2rem);
+  }
+}
+
+
+
+/* -------------------- Контент -------------------- */
+.contents {
+  grid-area: contents;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: rgba(0, 12, 22, 0.85);
+  overflow-y: auto;
+  max-height: 600px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+/* -------------------- Скроллбар -------------------- */
+.menu::-webkit-scrollbar,
+.contents::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menu::-webkit-scrollbar-track,
+.contents::-webkit-scrollbar-track {
+  background: rgba(74, 43, 82, 0.5);
+  border-radius: 15px;
+}
+
+.menu::-webkit-scrollbar-thumb,
+.contents::-webkit-scrollbar-thumb {
+  background: rgb(255, 204, 255);
+  border-radius: 15px;
+}
+
+/* -------------------- Изображения -------------------- */
+.sticker-img {
+  display: flex;
+  margin: 15px auto;
+  padding: 10px;
+  width: 80%;
+  height: auto;
+}
+
+/* -------------------- Текст -------------------- */
+.text1 {
+  font-size: calc(20px + 10 * (100vw / 1280));
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  padding: 10px;
+  color: #C0D6FF;
+  text-align: center;
+  text-shadow: 0 0 5px #00BFFF;
+}
+
+@media (max-width: 480px) {
+  .text1 {
+    font-size: 1rem;
+  }
+
+  .menu-item {
+    padding: 12px;
+  }
+}
+
+.menu-item {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item button {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+.text-paragraph {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1em;
+  color: #C0D6FF;
+  text-align: justify;
+}
+
+.text-subtitle {
+  font-size: 1.3rem;
+  margin-top: 1.5em;
+  color: #87CEFA;
+  text-shadow: 0 0 4px #00BFFF;
+}
+
+.text-list {
+  margin: 1em 0;
+  padding-left: 1.2em;
+  color: #C0D6FF;
+}
+
+.text-list li {
+  margin-bottom: 0.5em;
+}
+
+.text-callout {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 2em;
+  color: #00FFFF;
+  text-shadow: 0 0 6px #00BFFF;
+}
+
+/* Стилизация скроллбаров для WebKit-браузеров (Chrome, Edge, Opera) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 12, 22, 0.6); /* фон трека */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00FFFF; /* сам ползунок */
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #00e0e0;
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00FFFF rgba(0, 12, 22, 0.6);
+}
