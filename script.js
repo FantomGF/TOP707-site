@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
               wrapper.classList.add('value-wrapper');
 
               const img = document.createElement('img');
-              img.src = 'calibri.jpg';
+              img.src = 'calibri.png';
               img.alt = 'Рейтинг';
               img.classList.add('value-icon');
 
