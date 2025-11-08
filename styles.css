@@ -311,9 +311,81 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #00e0e0;
 }
-
-/* Для Firefox */
 * {
+
+  /* Для Firefox */
   scrollbar-width: thin;
   scrollbar-color: #00FFFF rgba(0, 12, 22, 0.6);
+}
+
+/* Базовая таблица */
+.json-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #C0D6FF;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  text-shadow: 0 0 2px #00BFFF;
+}
+
+.json-table th,
+.json-table td {
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 12px;
+  text-align: left;
+}
+
+.json-table thead {
+  background-color: rgba(0, 20, 30, 0.9);
+}
+
+.json-table tbody tr:nth-child(even) {
+  background-color: rgba(0, 20, 30, 0.7);
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+  .json-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .json-table tr {
+    display: flex;              /* строки становятся горизонтальными блоками */
+    justify-content: space-between;
+    margin-bottom: 0.8em;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(0, 20, 30, 0.7);
+    padding: 6px;
+  }
+
+  .json-table td {
+    flex: 1;
+    padding: 8px;
+    text-align: left;
+    border: none;
+  }
+
+  .json-table td:first-child {
+    font-weight: bold;
+    color: #87CEFA;
+    text-shadow: 0 0 4px #00BFFF;
+    flex: 0 0 40%;   /* ширина для заголовка */
+  }
+
+  .json-table td:last-child {
+    flex: 0 0 60%;   /* ширина для значения */
+    color: #C0D6FF;
+  }
+}
+
+.value-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.value-icon {
+  width: clamp(16px, 2vw, 24px); /* адаптивная ширина */
+  height: auto;
 }

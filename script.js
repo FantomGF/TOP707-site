@@ -1,6 +1,5 @@
 // Ждем загрузки DOM
 document.addEventListener("DOMContentLoaded", function () {
-  // Получаем ссылки на основные элементы
   const contents = document.querySelector(".contents");
   const footer = document.querySelector(".footer");
 
@@ -203,41 +202,150 @@ document.addEventListener("DOMContentLoaded", function () {
       Здесь идет настоящая битва умов, талантов и характеров! Смотри, какая команда лидирует в общем зачете и в каждом кластере.
     </p>
 
-    <p class="text-paragraph">
-      <em>(В этом разделе скоро появится автоматически обновляемая таблица с результатами — следи за обновлениями!)</em>
-    </p>
+    <div id="json-table"></div>
   </section>
 `,
   };
 
-  // Привязываем обработчики событий для кнопок меню
-  document.getElementById("main").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.main;
-    contents.scrollTop = 0;
-  });
+  // Обработчики вкладок
+    document.getElementById("main").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.main;
+      contents.scrollTop = 0;
+    });
 
-  document.getElementById("cluster").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.cluster;
-    contents.scrollTop = 0;
-  });
+    document.getElementById("cluster").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.cluster;
+      contents.scrollTop = 0;
+    });
 
-  document.getElementById("system").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.system;
-    contents.scrollTop = 0;
-  });
+    document.getElementById("system").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.system;
+      contents.scrollTop = 0;
+    });
 
-  document.getElementById("how-to-earn").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.earn;
-    contents.scrollTop = 0;
-  });
+    document.getElementById("how-to-earn").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.earn;
+      contents.scrollTop = 0;
+    });
 
-  document.getElementById("calendar").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.calendar;
-    contents.scrollTop = 0;
-  });
+    document.getElementById("calendar").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.calendar;
+      contents.scrollTop = 0;
+    });
 
-  document.getElementById("rating").addEventListener("click", function () {
-    contents.innerHTML = contentTexts.rating;
-    contents.scrollTop = 0;
-  });
+    document.getElementById("rating").addEventListener("click", () => {
+      contents.innerHTML = contentTexts.rating;
+      contents.scrollTop = 0;
+
+      const sheetId = '1T3PS2Y8HVz9IpjmlrVpk_SpVRfxWBHuCAwfgu_6XbF0';
+      const timestamp = new Date().getTime();
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&t=${timestamp}`;
+      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(csvUrl)}&disableCache=true`;
+
+      function buildTable(rows) {
+        const container = document.getElementById('json-table');
+        container.innerHTML = ''; // очищаем перед вставкой
+
+        const table = document.createElement('table');
+        table.classList.add('json-table');
+
+        const headers = rows[0];
+
+        if (window.innerWidth > 768) {
+          // --- ПК: обычная таблица ---
+          const thead = document.createElement('thead');
+          const headerRow = document.createElement('tr');
+          headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+          });
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+
+          const tbody = document.createElement('tbody');
+          rows.slice(1).forEach(row => {
+            const tr = document.createElement('tr');
+            row.forEach(cell => {
+              const td = document.createElement('td');
+
+              const wrapper = document.createElement('div');
+              wrapper.classList.add('value-wrapper');
+
+              const img = document.createElement('img');
+              img.src = 'icon.png';
+              img.alt = 'icon';
+              img.classList.add('value-icon');
+
+              const span = document.createElement('span');
+              span.textContent = cell;
+
+              wrapper.appendChild(img);
+              wrapper.appendChild(span);
+              td.appendChild(wrapper);
+
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+
+        } else {
+          // --- Мобильные: вертикальная таблица ---
+          const tbody = document.createElement('tbody');
+          rows.slice(1).forEach(row => {
+            row.forEach((cell, i) => {
+              const tr = document.createElement('tr');
+
+              const thCell = document.createElement('td');
+              thCell.textContent = headers[i];
+              thCell.style.fontWeight = 'bold';
+              thCell.style.color = '#87CEFA';
+
+              const valCell = document.createElement('td');
+
+              const wrapper = document.createElement('div');
+              wrapper.classList.add('value-wrapper');
+
+              const img = document.createElement('img');
+              img.src = 'calibri.jpg';
+              img.alt = 'Рейтинг';
+              img.classList.add('value-icon');
+
+              const span = document.createElement('span');
+              span.textContent = cell;
+
+              wrapper.appendChild(img);
+              wrapper.appendChild(span);
+              valCell.appendChild(wrapper);
+
+              tr.appendChild(thCell);
+              tr.appendChild(valCell);
+              tbody.appendChild(tr);
+            });
+          });
+          table.appendChild(tbody);
+        }
+
+        container.appendChild(table);
+      }
+
+      function loadTable() {
+        fetch(proxyUrl)
+          .then(response => response.text())
+          .then(csvText => {
+            const rows = csvText.trim().split('\n').map(row => row.split(','));
+            buildTable(rows);
+          })
+          .catch(error => {
+            console.error('Ошибка загрузки CSV через прокси:', error);
+          });
+      }
+
+      // Загружаем при старте
+      loadTable();
+
+      // Перестраиваем при изменении размера окна
+      window.addEventListener('resize', loadTable);
+   });
 }); // ← ЭТО была пропущенная скобка и точка с запятой
