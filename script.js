@@ -273,8 +273,8 @@ document.addEventListener("DOMContentLoaded", function () {
               wrapper.classList.add('value-wrapper');
 
               const img = document.createElement('img');
-              img.src = 'icon.png';
-              img.alt = 'icon';
+              img.src = 'calibri.png';
+              img.alt = 'Рейтинг';
               img.classList.add('value-icon');
 
               const span = document.createElement('span');
